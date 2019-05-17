@@ -1,0 +1,45 @@
+
+# DO NOT REMOVE THIS LINE AND THE LINES BELOW ERRORPAGEID:Tuvavu
+ErrorDocument 400 /400.html
+# DO NOT REMOVE THIS LINE AND THE LINES ABOVE Tuvavu:ERRORPAGEID
+
+
+# DO NOT REMOVE THIS LINE AND THE LINES BELOW ERRORPAGEID:byjybe
+ErrorDocument 401 /401.html
+# DO NOT REMOVE THIS LINE AND THE LINES ABOVE byjybe:ERRORPAGEID
+
+
+
+
+# DO NOT REMOVE THIS LINE AND THE LINES BELOW ERRORPAGEID:uhyGyd
+ErrorDocument 404 /404.html
+# DO NOT REMOVE THIS LINE AND THE LINES ABOVE uhyGyd:ERRORPAGEID
+
+
+# DO NOT REMOVE THIS LINE AND THE LINES BELOW ERRORPAGEID:daZequ
+ErrorDocument 403 /403.html
+# DO NOT REMOVE THIS LINE AND THE LINES ABOVE daZequ:ERRORPAGEID
+
+
+# DO NOT REMOVE THIS LINE AND THE LINES BELOW ERRORPAGEID:agepaL
+ErrorDocument 500 /500.html
+# DO NOT REMOVE THIS LINE AND THE LINES ABOVE agepaL:ERRORPAGEID
+
+#SetOutputFilter DEFLATE
+
+# Turn on Expires and set default expires to 3 days
+#ExpiresActive On
+#ExpiresDefault A259200
+
+# Set up 2 Hour caching on commonly updated files
+#<FilesMatch "\.(xml|txt|html|js|css)$">
+  #ExpiresDefault A10
+  #Header append Cache-Control "private, must-revalidate"
+#</FilesMatch>
+
+# Force no caching for dynamic files
+#<FilesMatch "\.(php|cgi|pl|htm)$">
+  #ExpiresDefault A0
+  #Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  #Header set Pragma "no-cache"
+#</FilesMatch>
