@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once 'config.php';
+require_once 'config.php'; //TODO: CHANGE TO require_once 'config-public.php'; and USE YOUR CREDENTIALS;
 
 $id = $_POST['id'];
 $name = $_POST['name'];
