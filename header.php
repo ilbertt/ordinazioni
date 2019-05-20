@@ -4,7 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once 'config-public.php'; //TODO: CHANGE TO require_once 'config-public.php' and USE YOUR CREDENTIALS;
+require_once 'config.php';
 ?>
 
 <html>
