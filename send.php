@@ -51,7 +51,7 @@ foreach ($arr as $line) {
         $prezzo = $arrqta[1];
     }
 
-    $sql = "INSERT INTO `ordini` (`idord`, `name`, `table`, `idprod`, `qta`, `rimozioni`, `prezzo`) VALUES ('$id', '$name', '$num', '$idprod', '$qta', '$nota_db', '$prezzo')";
+    $sql = "INSERT INTO `ordini` (`IDOrd`, `Nome`, `Tavolo`, `IDProd`, `Qta`, `Note`) VALUES ('$id', '$name', '$num', '$idprod', '$qta', '$nota_db')";
     if($mysqli->query($sql)){
         echo "";
     } else{
