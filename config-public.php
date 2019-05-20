@@ -8,10 +8,10 @@
 
 //USE YOUR CREDENTIALS
 
-$db_host = ""; //Host address (most likely localhost)
-$db_name = ""; //Name of Database
-$db_user = ""; //Name of database user
-$db_pass = ""; //Password for database user
+$db_host = "localhost"; //Host address (most likely localhost)
+$db_name = "ordinazioni"; //Name of Database
+$db_user = "ordinazioni"; //Name of database user
+$db_pass = "Ordi2019!"; //Password for database user
 
 $mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);
 GLOBAL $mysqli;

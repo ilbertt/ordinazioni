@@ -4,14 +4,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once 'config.php'; //TODO: CHANGE TO require_once 'config-public.php' and USE YOUR CREDENTIALS;
+require_once 'config-public.php'; //TODO: CHANGE TO require_once 'config-public.php' and USE YOUR CREDENTIALS;
 ?>
 
 <html>
     <head>
         <title>Ordina online</title>
         <link href="default.css" rel='stylesheet' type='text/css'/>
-        <script src='jquery-3.3.1.min.js'></script> <!--TODO: INCLUDE jquery library-->
+        <script src='jquery-3.4.1.min.js'></script> <!--TODO: INCLUDE jquery library-->
         <script src='funcs.js'></script>
     </head>
     <body>

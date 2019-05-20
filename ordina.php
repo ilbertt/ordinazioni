@@ -15,7 +15,7 @@ if(isset($_GET)){
 
 global $mysqli;
 
-$sql2 = "INSERT INTO `id-ordini` (`vero`) VALUES ('1')";
+$sql2 = "INSERT INTO `id-ordini` (`nome`,`table`) VALUES ('$order_name','$table_num')";
 if ($mysqli->query($sql2)) {
     $newid = $mysqli->insert_id;
 } else {
