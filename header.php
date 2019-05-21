@@ -13,7 +13,15 @@ require_once 'config.php';
         <link href="default.css" rel='stylesheet' type='text/css'/>
         <script src='jquery-3.4.1.min.js'></script> <!--TODO: INCLUDE jquery library-->
         <script src='funcs.js'></script>
+        <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+        <script src="semantic/dist/semantic.min.js"></script>
     </head>
     <body>
         <div class="content">
-            <p class="title"><span>F</span>esta <span>M</span>aria <span>A</span>usiliatrice 20<span>19</span></p>
+            <!-- <p class="title"><span>F</span>esta <span>M</span>aria <span>A</span>usiliatrice 20<span>19</span></p> -->
+        <div class="ui grid">
+            <div class="four wide column"></div>
+            <div class="four wide column"></div>
+            <div class="four wide column"></div>
+            <div class="four wide column"></div>
+        </div>
