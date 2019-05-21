@@ -21,4 +21,4 @@ if(mysqli_connect_errno()) {
 	exit();
 }
 
-require_once 'funcs.php';
+require_once './utils/php/funcs.php';
