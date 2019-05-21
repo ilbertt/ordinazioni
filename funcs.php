@@ -51,7 +51,7 @@ function tableHead($id, $displayname){
 function tableContent($tipo_id, $tipo){
   global $mysqli;
   //$stmt = $mysqli->query("SELECT Prodotti.ID, Prodotti.IDProd, Prodotti.Nome, Prodotti.Descr, Prodotti.Prezzo, Tipo.Tipo FROM Prodotti LEFT JOIN Tipo ON Prodotti.Tipo = Tipo.ID WHERE Prodotti.Tipo = '$tipo'");
-  $stmt = $mysqli->query("SELECT * FROM Prodotti WHERE Tipo = '$tipo_id'");
+  $stmt = $mysqli->query("SELECT * FROM `Prodotti` WHERE `Tipo` = '$tipo_id' AND `fuori-listino` IS FALSE");
 
   if ($stmt->num_rows > 0){
       $x = 0;
