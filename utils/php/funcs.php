@@ -74,7 +74,7 @@ function tableContent($tipo_id, $tipo){
           echo "<tr>
                 <td $class><span id='app-n-$id'>$nome</span><br><span class='descr'>$descr</span></td>
                 <td $class style='text-align: center;'>&#8364; <span id='app-p-$id'>$prezzo</span></td>
-                <td $class style='text-align: center;'><input type='number' class='qta' value='0' id='app-q-$id'/></td>
+                <td $class style='text-align: center;'><input type='number' class='qta' value='0' id='input-qta-$id' data-idprod='$idprod'/></td>
                 </tr>";
 
           $x++;

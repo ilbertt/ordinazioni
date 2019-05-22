@@ -5,6 +5,8 @@
  */
 
 $(document).ready(function(){
+    setOrder();
+
     $('input').click(function(){
         $(this).select();
     });
@@ -21,59 +23,30 @@ $(document).ready(function(){
     });
 
     $('#btn-send').click(function(){
-        var ordname = $('#nome-ordine').text();
-        var tblnum = $('#numero-tavolo').text();
-        var total = $('#num-total').text();
-        var orderid = $('#id-ordine').text();
-        var arrords = [];
-        var text = '';
-        var virgola = '';
-        var nota = '';
-        var newtxt = '';
-        var newnota= '';
-        var virgola_2 = '';
-        //console.log($('#ordine').text());
+      var order_data = {};
+      order_data = JSON.parse(localStorage.getItem('order-data'));
+      var order_prods = {}
+      order_prods = JSON.parse(localStorage.getItem('order-prods'));
 
-        if($('#ordine').text()!==''){
-            $('div', '#ordine').each(function(){
-                arrords.push($(this).attr('id'));
-            });
+      //console.log(order_data,order_prods);
+      if(!$.isEmptyObject(order_data) && !$.isEmptyObject(order_prods)){
+        $.post('send.php', {'order-data': order_data, 'order-prods': order_prods}, function(res){
 
-            if(arrords.lenght !== 0){
-                for(var x = 0; x< arrords.length; x++){
-                    if(x !== 0){
-                        virgola = ',';
-                        virgola_2 = '[';
-                    }
-                    console.log(arrords[x]);
-                    newtxt = $('#'+arrords[x]).clone().find('#'+arrords[x].replace('ord', 'tot')).remove().end().text().slice(0, -1);
-                    newnota = $('#'+arrords[x]+'-nota').text().trim();
-                    console.log(newnota);
-                    if(newnota || newnota!==''){
-                        nota = nota+virgola_2+newnota;
-                    }
-                    text = text+virgola+newtxt;
+              // show the response
+              $('#completed').show();
+              $('#completed').html(res);
+              //$('#indicazione-gluten').hide();
+              $('.indice').hide();
+              $('.tabs').hide();
+              $('.conto').hide();
 
-                }
+          }).fail(function() {
 
-                $.post("send.php", {id: orderid, name: ordname, num: tblnum, tot: total, text: text, note: nota}, function (output){
-                console.log(output);
-                    if(output === ''){
-                        $('#completed').show();
-                        $('#indicazione-gluten').hide();
-                        $('.indice').hide();
-                        $('.tabs').hide();
-                        $('.conto').hide();
-                    } else{
-                        $('#error').show();
-                        $('#indicazione-gluten').hide();
-                        $('.indice').hide();
-                        $('.tabs').hide();
-                        $('.conto').hide();
-                    }
-                });
-            }
-        }
+              // just in case posting your form failed
+              alert( "C'è stato un errore" );
+
+          });
+      }
     });
 
 
@@ -82,7 +55,10 @@ $(document).ready(function(){
             $(this).val('0');
         }
 
-        setOrds($(this));
+        var idprod = parseInt($(this).attr('data-idprod'),10);
+        var qta = parseInt($(this).val(),10);
+
+        updateOrder(idprod,qta);
     });
 
     $('.tabs textarea').blur(function(){
@@ -90,81 +66,28 @@ $(document).ready(function(){
     });
 });
 
-/*function refreshKitchen(sect){
-    console.log('ORA!');
-    $.post("r-kitchen.php", {s: sect}, function (output){
-            console.log(output);
-            $(".tabs").html(output);
-            });
-}*/
+function setOrder(){
+  var ordname = $('#nome-ordine').text();
+  var tblnum = parseInt($('#numero-tavolo').text(),10);
+  var orderid = parseInt($('#id-ordine').text(),10);
 
-function setOrds(ogg){
+  var newOrderData = {};
+  newOrderData = {name: ordname, table: tblnum, idord: orderid};
+  localStorage.setItem('order-data', JSON.stringify(newOrderData));
 
-        var id = ogg.attr('id');
-        var arr = id.split('-');
-        var numid = arr[arr.length-1];
-        var type = arr[0];
-        var nota = '';
-        //$('#gluten').remove();
-        /*$.fn.ignore = function(sel){
-            return $('#'+type+'-q-'+numid).clone().find(sel||">*").remove().end();
-        };*/
+  var newOrderProds = {}
+  localStorage.setItem('order-prods', JSON.stringify(newOrderProds));
+}
 
-        var name = $('#'+type+'-n-'+numid)/*.ignore('#gluten')*/.text();
+function updateOrder(idprod,qta){
+  var order = {}
+  order = JSON.parse(localStorage.getItem('order-prods'));
 
-        var val = $('#'+type+'-q-'+numid).val().trim();
-
-        console.log(type);
-
-        if (type==='ham' || type === 'san'){
-            nota = $('#'+type+'-i-'+numid).val();
-        }
-
-        var prez = parseFloat($('#'+type+'-p-'+numid).text()).toFixed(2);
-        var preztot = parseFloat((prez*val).toFixed(2)).toFixed(2);
-
-        var prectext = $('#ordine').html();
-        var prectot = $('#num-total').text();
-        if (prectot === '') {
-            prectot = 0;
-        } else{
-            prectot = parseFloat(prectot).toFixed(2);
-        }
-        var prechidtxt = $('#hidorder').html();
-
-        console.log(val);
-
-        console.log(val, id, numid, type, name, prez, preztot, nota);
-
-        if($('#ord-'+type+'-'+numid).length){
-            if(val === '0' || val === ''){
-                var tobemodiftot = parseFloat($('#tot-'+type+'-'+numid).text());
-
-                var newtot = (parseFloat($('#num-total').text())*1)-(tobemodiftot*1);
-                var totaletrue = ((newtot*1)+(preztot*1)).toFixed(2);
-
-                $('#ord-'+type+'-'+numid+'-nota').remove();
-
-                $('#totale').html("Totale: &#8364; <span id='num-total'>"+totaletrue+"</span>");
-                $('#ord-'+type+'-'+numid).parent().nextUntil(':not(br)').remove();
-                $('#ord-'+type+'-'+numid).remove();
-
-
-            } else{
-                var tobemodiftot = parseFloat($('#tot-'+type+'-'+numid).text());
-
-                var newtot = (parseFloat($('#num-total').text())*1)-(tobemodiftot*1);
-                var totaletrue = ((newtot*1)+(preztot*1)).toFixed(2);
-
-                $('#totale').html("Totale: &#8364; <span id='num-total'>"+totaletrue+"</span>");
-                $('#ord-'+type+'-'+numid+'-nota').text(nota);
-                $('#ord-'+type+'-'+numid).html(name+" X"+val+" &#8364;"+prez+"<span style='margin-left: 10px; float: right; border-bottom: 1px solid black'>&#8364;<span id='tot-"+type+"-"+numid+"'>"+preztot+'</span></span>');
-            }
-        } else if(val !== '0'){
-            var totale = ((prectot*1)+(preztot*1)).toFixed(2);
-
-            var text = prectext+"<span id='ord-"+type+"-"+numid+"-nota' style='display: none;'>"+nota+"</span><div id='ord-"+type+"-"+numid+"' style='border-bottom: 1px solid black'><span style='font-style: italic;'>"+name+"</span> X"+val+" &#8364;"+prez+"<span style='margin-left: 10px; float: right; font-size: 1.8em;'>&#8364;<span id='tot-"+type+"-"+numid+"'>"+preztot+'</span></span></div><br>';
-            $('#ordine').html(text);
-            $('#totale').html("Totale: &#8364; <span id='num-total'>"+totale+"</span>");
-        }
+  //console.log(order);
+  if((!order[idprod] && qta > 0) || (order[idprod] && qta!==0)){
+    order[idprod] = qta;
+  }else{
+    delete order[idprod];
+  }
+  localStorage.setItem('order-prods', JSON.stringify(order));
 }
