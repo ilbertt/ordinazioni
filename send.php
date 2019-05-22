@@ -17,10 +17,18 @@ if(isset($_POST)){
   {
     $sql = "INSERT INTO `ordini` (`idord`, `name`, `table`, `idprod`, `qta`) VALUES ('$idord', '$name', '$table', '$idprod', '$qta')";
     if($mysqli->query($sql)){
-        echo "OK";
+      $res = true;
     } else{
-        echo "$sql<br>$mysqli->error";
+      //echo "$sql<br>$mysqli->error";
+      $res = false;
+      break;
     }
+  }
+
+  if($res){
+    echo "Completato!<br> Vai in cassa a ritirare gli scontrini :)<br><a href='ordina.php?n=$name&t=$table' id='neworder'>Nuovo ordine</a>";
+  }else{
+    echo "C'&#232; stato un errore... Ci scusiamo per il disagio<br><a href='ordina.php?n=$name&t=$table' id='neworder'>Rifai ordine</a>";
   }
 } else{
   echo "Nothing.";
