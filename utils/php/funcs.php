@@ -33,7 +33,7 @@
 
          echo "<li><a href='#indice-$tipo_id'>$tipo</a></li>";
        }
-       echo "<li style='margin-top: 10px;'><a href='#conto'>Vai al conto</a></li>
+       echo "<li style='margin-top: 10px;'><a href='#indice-conto'>Vai al conto</a></li>
              </ul>";
     }
  }
@@ -71,10 +71,21 @@ function tableContent($tipo_id, $tipo){
               $class = '';
           }
 
-          echo "<tr>
-                <td $class><span id='app-n-$id'>$nome</span><br><span class='descr'>$descr</span></td>
-                <td $class style='text-align: center;'>&#8364; <span id='app-p-$id'>$prezzo</span></td>
-                <td $class style='text-align: center;'><input type='number' class='qta' value='0' id='input-qta-$id' data-idprod='$idprod'/></td>
+          echo "<tr id='row-$idprod'>
+                  <td $class>
+                    <span id='nome-$idprod'>$nome</span>
+                    <br>
+                    <span class='descr'>$descr</span>
+                  </td>
+                  <td $class style='text-align: center;'>
+                    &#8364; <span id='prezzo-$idprod'>$prezzo</span>
+                  </td>
+                  <td $class style='text-align: center;'>
+                    <input type='number' class='qta' value='0' id='input-qta-$idprod' data-idprod='$idprod' disabled/>
+                    <br>
+                    <button class='qta-button minus' data-op='-' data-idprod='$idprod'>-</button>
+                    <button class='qta-button plus' data-op='+' data-idprod='$idprod'>+</button>
+                  </td>
                 </tr>";
 
           $x++;

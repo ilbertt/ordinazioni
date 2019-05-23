@@ -3,13 +3,13 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : 29-apr-2016, 16.58.01
     Author     : Luca
 */
 html, body {
     margin: 0px;
-    background: #ffffff; 
+    background: #ffffff;
     font-family:Verdana, Arial, Helvetica, sans-serif;
     font-size:0.95em;
     color:#4d4948;
@@ -22,7 +22,7 @@ a{
 }
 .tabs a{
      color:#ff9933;
-    
+
 }
 .content{
     //margin: 5px;
@@ -38,7 +38,7 @@ a{
     border-collapse: collapse;
     font-size: 3em;
     //margin: 5px;
-    
+
 }
 .tabs td{
     border: 1px solid black;
@@ -48,19 +48,19 @@ a{
     border:1px solid black;
     border-collapse:collapse;
     padding:5px;
-    text-align:left; 
+    text-align:left;
 }
 
 .tabs th {
     font-size: 1.5em;
-    
+
 }
 .tdp{
     background-color:#ebebe0;
 }
 
 .title{
-    
+
     text-align: center;
     font-size: 3em;
     color:#ffb380;
@@ -89,7 +89,7 @@ a{
     margin-top: 30px;
     width: 100%;
     font-size: 1.8em;
-    
+
 }
 .conto-content{
     //margin-right:10px;
@@ -100,10 +100,12 @@ a{
     width: 100%;
 }
 .qta{
-    width: 100%;
+    width: 50%;
     text-align: center;
     font-size: 1em;
     height: 100%;
+    color: black;
+    background-color: #ffd699;
 }
 
 .button{
@@ -127,21 +129,21 @@ a{
     border-radius: 0.2em;
 }
 .button-iniziale{
-    
+
     font-size: 1em;
     border-radius: 0.2em;
     background-color:#ffe0b3;
 }
 .ordine{
-    
+
     text-align: left;
     margin-left: 4px;
     font-size: 2em;
-    
+
 }
 
 .tavolo{
-    
+
     float: right;
     margin-right: 35px;
     font-size: 2em;
@@ -157,13 +159,13 @@ a{
 .designed-closer{
     text-align: center;
     font-size: 0.8em;
-    
+
 }
 .copyright-closer{
-    
+
     text-align: center;
     font-size: 0.8em;
-    
+
 }
 .completed{
     font-size: 2.5em;
@@ -175,4 +177,20 @@ a{
     border: 1px solid black;
     font-size: 0.6em;
     margin: 0 30px 15px 30px;
+}
+
+.qta-button{
+  width: 30%;
+}
+.plus{
+  background-color: #00cc00;
+}
+.plus:active{
+  background-color: #009900;
+}
+.minus{
+  background-color: #ff6600;
+}
+.minus:active{
+  background-color: #cc5200;
 }

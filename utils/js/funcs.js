@@ -43,14 +43,14 @@ $(document).ready(function(){
           }).fail(function() {
 
               // just in case posting your form failed
-              alert( "C'è stato un errore" );
+              alert( "C'è stato un errore..." );
 
           });
       }
     });
 
 
-    $('.tabs input').blur(function(){
+    /*$('.tabs .qta').blur(function(){
         if(!$(this).val().trim()){
             $(this).val('0');
         }
@@ -58,13 +58,106 @@ $(document).ready(function(){
         var idprod = parseInt($(this).attr('data-idprod'),10);
         var qta = parseInt($(this).val(),10);
 
+        var row = $(this).closest('tr');
+        var idrow = row.attr('id');
+
+        if(row.hasClass('row-conto')){ //se sto toccando un input nella tabella del conto
+          var input = $('.tabs #'+idrow+' #input-qta-'+idprod);
+          input.val(qta);
+          if(qta===0){
+            row.remove();
+          }
+        }else{ //se sto toccando in input dei prodotti
+          var row_conto = $('#tb-conto #'+idrow);
+
+          if(row_conto.length){ //controlla se la riga esiste già nel conto
+            var input_conto = $('#tb-conto #'+idrow+' #conto-qta-'+idprod);
+            if(qta === 0){
+              row_conto.remove();
+            }else{
+              input_conto.val(qta);
+            }
+          } else{
+            if(qta!==0){
+              var copyTable = $('#tb-conto tbody');
+              var cloneRow = row.clone(true,true);
+              //console.log(idrow);
+              copyTable.append(cloneRow);
+              $('#tb-conto #'+idrow).addClass('row-conto');
+              $('#tb-conto #'+idrow+' #input-qta-'+idprod).attr('id', 'conto-qta-'+idprod);
+            }
+          }
+        }
+
         updateOrder(idprod,qta);
+    });*/
+
+    $('.qta-button').click(function(){
+      var idprod = parseInt($(this).attr('data-idprod'),10);
+      var op = $(this).attr('data-op');
+
+      var input = $('#input-qta-'+idprod);
+      var qta = parseInt(input.val(),10);
+      qta = handleVal(qta,op);
+
+      var row = $(this).closest('tr');
+      var idrow = row.attr('id');
+
+      if(row.hasClass('row-conto')){ //se sto toccando un input nel conto
+        var input_conto = $('#tb-conto #'+idrow+' #conto-qta-'+idprod);
+
+        if(qta>0){
+          input.val(qta);
+          input_conto.val(qta);
+        }else{
+          if(confirm("Rimuovere dal conto?")){
+            input.val(qta);
+            row.remove();
+          }else{
+            qta = 1;
+          }
+        }
+
+      }else{ //se sto toccando un input dei prodotti
+        var row_conto = $('#tb-conto #'+idrow);
+        input.val(qta);
+
+        if(row_conto.length){ //se la riga esiste già nel conto
+          var input_conto = $('#tb-conto #'+idrow+' #conto-qta-'+idprod);
+          input_conto.val(qta);
+          if(qta===0){
+            row_conto.remove();
+          }
+        } else{
+          if(qta>0){
+            var copyTable = $('#tb-conto tbody');
+            var cloneRow = row.clone(true,true);
+            //console.log(idrow);
+            copyTable.append(cloneRow);
+            $('#tb-conto #'+idrow).addClass('row-conto');
+            $('#tb-conto #'+idrow+' #input-qta-'+idprod).attr('id', 'conto-qta-'+idprod);
+          }
+        }
+      }
+      updateOrder(idprod, qta);
     });
 
-    $('.tabs textarea').blur(function(){
+    /*$('.tabs textarea').blur(function(){
         setOrds($(this));
-    });
+    });*/
 });
+
+function handleVal(qta,operator){
+  if(operator === '+'){
+    return qta + 1
+  }else if(operator === '-'){
+    if(qta>0){ //evita che si vada sotto lo 0
+      return qta-1;
+    }else{
+      return qta;
+    }
+  }
+}
 
 function setOrder(){
   var ordname = $('#nome-ordine').text();
@@ -84,7 +177,7 @@ function updateOrder(idprod,qta){
   order = JSON.parse(localStorage.getItem('order-prods'));
 
   //console.log(order);
-  if((!order[idprod] && qta > 0) || (order[idprod] && qta!==0)){
+  if(qta>0){
     order[idprod] = qta;
   }else{
     delete order[idprod];

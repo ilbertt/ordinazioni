@@ -59,19 +59,26 @@ if ($stmt->num_rows > 0){
 </div>
 <div class='tabs'>
   <?php echo printTables(); ?>
+  <p class='beforetable'></p>
+  <table id='tb-conto'>
+    <thead>
+      <tr>
+        <th style='width:75%' id='indice-conto'><a href='#indice-conto'>CONTO</a></th>
+        <th style='width:20%; text-align:center'>Prezzo</th>
+        <th style='width:5%; text-align:center'>Quantit&#224;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr>
+            <td $class><span id='conto-nome'>Prova</span><br><span class='descr'>descr</span></td>
+            <td $class style='text-align: center;'>&#8364; <span id='conto-prezzo'>3.50</span></td>
+            <td $class style='text-align: center;'><input type='number' class='qta' value='0' id='conto-qta' data-idprod='$idprod'/></td>
+            </tr> -->
+    </tbody>
+  </table>
+  <span style='font-size:1.5em;'><span><a href='#indice' style='color:#ff3333'>Torna all'indice</a></span><span style='float: right;'><a href='#conto' style='color:#ff3333'>Vai al conto</a></span></span>
 </div>
-<div class='conto'>
-<div class='conto-content'>
-    <span style='font-size: 1.5em; color:#ff9933; font-weight: bold; text-decoration: underline;' id='conto'>Conto</span>    <span><a href='#indice' style="font-size:1.2em; color: #ff3333; float: right;">Torna all'indice</a></span><br>
-    <span id='ordine'></span><br>
-    <span id='totale' style='float: right; font-weight: bold;'></span><br>
-    <!--<span style="width: 100%">
-    <label for='input-note'>Eventuali note:</label>
-    <textarea class='input-note' id='input-note' rows="3" style="width: 100%;"></textarea>
-    </span><br>-->
-    <button class='button' id='btn-send'>INVIA</button>
-</div>
-</div>
+<button class='button' id='btn-send'>INVIA</button>
 
 <?php
 require_once 'closer.php';
