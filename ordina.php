@@ -46,39 +46,50 @@ if ($stmt->num_rows > 0){
 
 <div class='order-name'>
     <!--<span style="font-size: 3em; color: red;"id="indicazione-gluten">Le piadine indicate con * sono disponibili anche senza glutine!</span><br><br>-->
-    <span id='id-ordine' style="display: none;"><?php echo $newid;?></span>
-    <span class='ordine'>Ordine di: <span id='nome-ordine' style='font-weight: bold;'><?php echo "$order_name"?></span></span>
-    <span class='tavolo'>Numero tavolo: <span id='numero-tavolo' style='font-weight: bold;'><?php echo "$table_num"?></span></span>
+    <p id='id-ordine'>ID Ordine: <span id='span-idord' style='font-weight: bold'><?php echo $newid;?></span></p>
+    <p>Ordine di: <span id='nome-ordine' style='font-weight: bold;'><?php echo "$order_name"?></span></p>
+    <p>Numero tavolo: <span id='numero-tavolo' style='font-weight: bold;'><?php echo "$table_num"?></span></p>
 </div>
 <br>
-<div class='completed' id='completed' style='display: none;'>Completato!<br> Vai in cassa a ritirare gli scontrini :)<br><a href='ordina.php?n=<?php echo $order_name?>&t=<?php echo $table_num?>' id='neworder'>Nuovo ordine</a></div>
-<div class='completed' id='error' style='display: none;'>C'&#232; stato un errore... Ci scusiamo per il disagio<br><a href='ordina.php?n=<?php echo $order_name?>&t=<?php echo $table_num?>' id='neworder'>Rifai ordine</a></div>
+<div class='completed' id='completed' style='display: none;'>
+  Completato!<br> Vai in cassa a ritirare gli scontrini :)
+  <br>
+  <a href='ordina.php?n=<?php echo $order_name?>&t=<?php echo $table_num?>' id='neworder'>Nuovo ordine</a>
+</div>
 <div class='indice'>
        <span style='font-size: 1.5em;' id='indice'>Indice</span>
        <?php echo printIndex(); ?>
 </div>
 <div class='tabs'>
-  <?php echo printTables(); ?>
-  <p class='beforetable'></p>
-  <table id='tb-conto'>
-    <thead>
-      <tr>
-        <th style='width:75%' id='indice-conto'><a href='#indice-conto'>CONTO</a></th>
-        <th style='width:20%; text-align:center'>Prezzo</th>
-        <th style='width:5%; text-align:center'>Quantit&#224;</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- <tr>
-            <td $class><span id='conto-nome'>Prova</span><br><span class='descr'>descr</span></td>
-            <td $class style='text-align: center;'>&#8364; <span id='conto-prezzo'>3.50</span></td>
-            <td $class style='text-align: center;'><input type='number' class='qta' value='0' id='conto-qta' data-idprod='$idprod'/></td>
-            </tr> -->
-    </tbody>
-  </table>
-  <span style='font-size:1.5em;'><span><a href='#indice' style='color:#ff3333'>Torna all'indice</a></span><span style='float: right;'><a href='#conto' style='color:#ff3333'>Vai al conto</a></span></span>
+  <div id='prodotti'>
+    <?php echo printTables(); ?>
+  </div>
+  <div id='conto' style='display: none;'>
+    <p class='beforetable'></p>
+    <div class='under-table'>
+      <span>
+        <button style='background-color: red;'><a href='#' style='color:white' onclick='hideConto();'>Torna all'indice</a></button>
+      </span>
+      <!---<span style='float: right;'>
+        <a href='#conto' style='color:#ff3333'>Vai al conto</a>
+      </span>-->
+    </div>
+    <table id='tb-conto'>
+      <thead>
+        <tr>
+          <th style='width:75%' id='indice-conto'><a href='#indice-conto'>CONTO</a></th>
+          <th style='width:20%; text-align:center'>Prezzo</th>
+          <th style='width:5%; text-align:center'>Quantit&#224;</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <p style='text-align: center; margin-top: 40px;'><button class='button' id='btn-send'>INVIA</button></p>
+  </div>
 </div>
-<button class='button' id='btn-send'>INVIA</button>
+
 
 <?php
 require_once 'closer.php';

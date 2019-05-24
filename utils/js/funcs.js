@@ -38,7 +38,7 @@ $(document).ready(function(){
               //$('#indicazione-gluten').hide();
               $('.indice').hide();
               $('.tabs').hide();
-              $('.conto').hide();
+              //$('.conto').hide();
 
           }).fail(function() {
 
@@ -48,49 +48,6 @@ $(document).ready(function(){
           });
       }
     });
-
-
-    /*$('.tabs .qta').blur(function(){
-        if(!$(this).val().trim()){
-            $(this).val('0');
-        }
-
-        var idprod = parseInt($(this).attr('data-idprod'),10);
-        var qta = parseInt($(this).val(),10);
-
-        var row = $(this).closest('tr');
-        var idrow = row.attr('id');
-
-        if(row.hasClass('row-conto')){ //se sto toccando un input nella tabella del conto
-          var input = $('.tabs #'+idrow+' #input-qta-'+idprod);
-          input.val(qta);
-          if(qta===0){
-            row.remove();
-          }
-        }else{ //se sto toccando in input dei prodotti
-          var row_conto = $('#tb-conto #'+idrow);
-
-          if(row_conto.length){ //controlla se la riga esiste già nel conto
-            var input_conto = $('#tb-conto #'+idrow+' #conto-qta-'+idprod);
-            if(qta === 0){
-              row_conto.remove();
-            }else{
-              input_conto.val(qta);
-            }
-          } else{
-            if(qta!==0){
-              var copyTable = $('#tb-conto tbody');
-              var cloneRow = row.clone(true,true);
-              //console.log(idrow);
-              copyTable.append(cloneRow);
-              $('#tb-conto #'+idrow).addClass('row-conto');
-              $('#tb-conto #'+idrow+' #input-qta-'+idprod).attr('id', 'conto-qta-'+idprod);
-            }
-          }
-        }
-
-        updateOrder(idprod,qta);
-    });*/
 
     $('.qta-button').click(function(){
       var idprod = parseInt($(this).attr('data-idprod'),10);
@@ -147,6 +104,18 @@ $(document).ready(function(){
     });*/
 });
 
+function showConto(){
+  $('#prodotti').hide();
+  $('.indice').hide();
+  $('#conto').show();
+}
+
+function hideConto(){
+  $('#prodotti').show();
+  $('.indice').show();
+  $('#conto').hide();
+}
+
 function handleVal(qta,operator){
   if(operator === '+'){
     return qta + 1
@@ -162,7 +131,7 @@ function handleVal(qta,operator){
 function setOrder(){
   var ordname = $('#nome-ordine').text();
   var tblnum = parseInt($('#numero-tavolo').text(),10);
-  var orderid = parseInt($('#id-ordine').text(),10);
+  var orderid = parseInt($('#span-idord').text(),10);
 
   var newOrderData = {};
   newOrderData = {name: ordname, table: tblnum, idord: orderid};

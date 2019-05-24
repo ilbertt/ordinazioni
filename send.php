@@ -19,16 +19,23 @@ if(isset($_POST)){
     if($mysqli->query($sql)){
       $res = true;
     } else{
-      //echo "$sql<br>$mysqli->error";
+
       $res = false;
       break;
     }
   }
 
   if($res){
-    echo "Completato!<br> Vai in cassa a ritirare gli scontrini :)<br><a href='ordina.php?n=$name&t=$table' id='neworder'>Nuovo ordine</a>";
+    echo "Completato!
+          <br>
+          Vai in cassa a ritirare gli scontrini :)
+          <br>
+          <a href='ordina.php?n=$name&t=$table' id='neworder'>Nuovo ordine</a>";
   }else{
-    echo "C'&#232; stato un errore... Ci scusiamo per il disagio<br><a href='ordina.php?n=$name&t=$table' id='neworder'>Rifai ordine</a>";
+    echo "$sql<br>$mysqli->error";
+    echo "C'&#232; stato un errore... Ci scusiamo per il disagio
+          <br>
+          <a href='ordina.php?n=$name&t=$table' id='neworder'>Rifai ordine</a>";
   }
 } else{
   echo "Nothing.";

@@ -33,7 +33,9 @@
 
          echo "<li><a href='#indice-$tipo_id'>$tipo</a></li>";
        }
-       echo "<li style='margin-top: 10px;'><a href='#indice-conto'>Vai al conto</a></li>
+       echo "<li style='margin-top: 10px;'>
+              <button style='background-color: blue;'><a href='javascript:void(0);' id='btn-conto' style='color:white;' onclick='showConto();'>Vai al conto</a></button>
+             </li>
              </ul>";
     }
  }
@@ -96,7 +98,14 @@ function tableContent($tipo_id, $tipo){
 
 function tableClose(){
     echo "</table>
-          <span style='font-size:1.5em;'><span><a href='#indice' style='color:#ff3333'>Torna all'indice</a></span><span style='float: right;'><a href='#conto' style='color:#ff3333'>Vai al conto</a></span></span>";
+          <div class='under-table'>
+            <span>
+              <button style='background-color: red;'><a href='#indice' style='color:white;'>Indice</a></button>
+            </span>
+            <span style='float: right;'>
+              <button style='background-color: blue;'><a href='javascript:void(0);' id='btn-conto' style='color:white;' onclick='showConto();'>Vai al conto</a></button>
+            </span>
+          </div>";
 }
 
 function cleanString($text) {
