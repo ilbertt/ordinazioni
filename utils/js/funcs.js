@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 $(document).ready(function(){
     setOrder();
 
@@ -35,7 +29,6 @@ $(document).ready(function(){
               // show the response
               $('#completed').show();
               $('#completed').html(res);
-              //$('#indicazione-gluten').hide();
               $('.indice').hide();
               $('.tabs').hide();
               //$('.conto').hide();
@@ -98,10 +91,6 @@ $(document).ready(function(){
       }
       updateOrder(idprod, qta);
     });
-
-    /*$('.tabs textarea').blur(function(){
-        setOrds($(this));
-    });*/
 });
 
 function showConto(){

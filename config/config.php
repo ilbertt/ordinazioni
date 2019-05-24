@@ -1,17 +1,9 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-//USE YOUR CREDENTIALS
-
-$db_host = "localhost"; //Host address (most likely localhost)
-$db_name = "ordinazioni"; //Name of Database
-$db_user = "ordinazioni"; //Name of database user
-$db_pass = "Ordi2019!"; //Password for database user
+$db_host = "localhost";
+$db_name = "ordinazioni";
+$db_user = "ordinazioni";
+$db_pass = "Ordi2019!";
 
 $mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);
 GLOBAL $mysqli;

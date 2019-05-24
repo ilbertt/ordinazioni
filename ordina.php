@@ -1,11 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 require_once 'header.php';
 
 if(isset($_GET)){
@@ -22,24 +15,6 @@ if ($mysqli->query($sql2)) {
     $newid = 1;
     echo "Errore: " . $sql2 . "<br>" . $mysqli->error;
 }
-
-/*$txt = "SELECT MAX(id) FROM `id-ordini`";
-$stmt = $mysqli->query($txt);
-
-if ($stmt->num_rows > 0){
-    while ($row = $stmt->fetch_assoc()){
-        $id = $row['max'];
-        echo $id;
-        $true = $row['true'];
-    }
-    $newid = ++$id;
-} else{
-    echo "$stmt<br>$mysqli->error";
-    $newid=1;
-}*/
-
-
-
 ?>
 <!--<span style="font-size: 3em; color: red;"id="indicazione-gluten">Gli ordini sono chiusi! Si prega il cliente di recarsi in cassa per effettuare un ordine</span><br><br>-->
 
@@ -70,9 +45,6 @@ if ($stmt->num_rows > 0){
       <span>
         <button style='background-color: red;'><a href='#' style='color:white' onclick='hideConto();'>Torna all'indice</a></button>
       </span>
-      <!---<span style='float: right;'>
-        <a href='#conto' style='color:#ff3333'>Vai al conto</a>
-      </span>-->
     </div>
     <table id='tb-conto'>
       <thead>
