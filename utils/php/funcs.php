@@ -41,9 +41,8 @@
  }
 
 function tableHead($id, $displayname){
-  echo "<p class='beforetable'></p>
-            <table id='tb-$id'>";
-  echo "<thead><tr>
+  echo "<table class='table' id='tb-$id'>";
+  echo "<thead><tr style='background-color: #e9f1fb;'>
           <th style='width:75%' id='indice-$id'><a href='#indice-$id'>$displayname</a></th>
           <th style='width:20%; text-align:center'>Prezzo</th>
           <th style='width:5%; text-align:center'>Quantit&#224;</th>
@@ -68,7 +67,8 @@ function tableContent($tipo_id, $tipo){
           $prezzo = $row['Prezzo'];
 
           if($x % 2 == 0) {
-              $class = "class='tdp'";
+              //$class = "class='tdp'";
+              $class = '';
           } else{
               $class = '';
           }
@@ -81,12 +81,16 @@ function tableContent($tipo_id, $tipo){
                   </td>
                   <td $class style='text-align: center;'>
                     &#8364; <span id='prezzo-$idprod'>$prezzo</span>
+                    <br>
+                    <span class='descr'>
+                      &#8364; <span class='tot-$idprod'>0.00</span>
+                    </span>
                   </td>
                   <td $class style='text-align: center;'>
-                    <input type='number' class='qta' value='0' id='input-qta-$idprod' data-idprod='$idprod' disabled/>
+                    <input type='number' class='qta' value='0' id='input-qta-$idprod' data-prezzo='$prezzo' data-idprod='$idprod'  data-tot='0.0' disabled/>
                     <br>
-                    <button class='qta-button minus' data-op='-' data-idprod='$idprod'>-</button>
-                    <button class='qta-button plus' data-op='+' data-idprod='$idprod'>+</button>
+                    <button class='qta-button minus' data-op='-' data-idprod='$idprod' data-prezzo='$prezzo'>-</button>
+                    <button class='qta-button plus' data-op='+' data-idprod='$idprod' data-prezzo='$prezzo'>+</button>
                   </td>
                 </tr>";
 

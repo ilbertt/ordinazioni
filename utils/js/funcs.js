@@ -43,12 +43,22 @@ $(document).ready(function(){
     });
 
     $('.qta-button').click(function(){
+      var prezzo = parseFloat($(this).attr('data-prezzo'));
       var idprod = parseInt($(this).attr('data-idprod'),10);
+      //var tot = parseFloat($(this).attr('data-tot'));
       var op = $(this).attr('data-op');
 
       var input = $('#input-qta-'+idprod);
       var qta = parseInt(input.val(),10);
       qta = handleVal(qta,op);
+
+      var newTot = handlePrice(qta,prezzo).toFixed(2);
+      input.attr('data-tot', newTot);
+      $('.tot-'+idprod).text(newTot);
+
+      var totConto = parseFloat($('#tot-conto').text());
+      totConto = handleConto(totConto,prezzo,op).toFixed(2);
+      $('#tot-conto').text(totConto);
 
       var row = $(this).closest('tr');
       var idrow = row.attr('id');
@@ -56,12 +66,16 @@ $(document).ready(function(){
       if(row.hasClass('row-conto')){ //se sto toccando un input nel conto
         var input_conto = $('#tb-conto #'+idrow+' #conto-qta-'+idprod);
 
+
         if(qta>0){
           input.val(qta);
+          input.attr('data-tot', newTot);
           input_conto.val(qta);
+          input_conto.attr('data-tot', newTot);
         }else{
           if(confirm("Rimuovere dal conto?")){
             input.val(qta);
+            input.attr('data-tot', newTot);
             row.remove();
           }else{
             qta = 1;
@@ -71,10 +85,12 @@ $(document).ready(function(){
       }else{ //se sto toccando un input dei prodotti
         var row_conto = $('#tb-conto #'+idrow);
         input.val(qta);
+        input.attr('data-tot', newTot);
 
         if(row_conto.length){ //se la riga esiste già nel conto
           var input_conto = $('#tb-conto #'+idrow+' #conto-qta-'+idprod);
           input_conto.val(qta);
+          input_conto.attr('data-tot', newTot);
           if(qta===0){
             row_conto.remove();
           }
@@ -113,6 +129,23 @@ function handleVal(qta,operator){
       return qta-1;
     }else{
       return qta;
+    }
+  }
+}
+
+function handlePrice(qta,prezzo){
+  //console.log(prezzo*qta);
+  return prezzo*qta;
+}
+
+function handleConto(tot,price,operator){
+  if(operator === '+'){
+    return tot + price;
+  }else if(operator === '-'){
+    if(tot>0.0){ //evita che si vada sotto lo 0
+      return tot-price;
+    }else{
+      return tot;
     }
   }
 }
