@@ -32,7 +32,7 @@ if ($mysqli->query($sql2)) {
   <a href='ordina.php?n=<?php echo $order_name?>&t=<?php echo $table_num?>' id='neworder'>Nuovo ordine</a>
 </div>
 <div class='indice'>
-       <span style='font-size: 1.5em;' id='indice'>Indice</span>
+       <span style='font-size: 100%;' id='indice'>Indice</span>
        <?php echo printIndex(); ?>
 </div>
 <div class='tabs'>
@@ -40,7 +40,6 @@ if ($mysqli->query($sql2)) {
     <?php echo printTables(); ?>
   </div>
   <div id='conto' style='display: none;'>
-    <p class='beforetable'></p>
     <div class='under-table'>
       <span>
         <button style='background-color: red;'><a href='#' style='color:white' onclick='hideConto();'>Torna all'indice</a></button>
