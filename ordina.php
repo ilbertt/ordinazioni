@@ -42,7 +42,7 @@ if ($mysqli->query($sql2)) {
   <div id='conto' style='display: none;'>
     <div class='under-table'>
       <span>
-        <button style='background-color: red;'><a href='#' style='color:white' onclick='hideConto();'>Torna all'indice</a></button>
+        <button style='background-color: red;'><a href='#indice' style='color:white' onclick='hideConto();'>Torna all'indice</a></button>
       </span>
     </div>
     <table class='table' id='tb-conto'>
@@ -56,7 +56,7 @@ if ($mysqli->query($sql2)) {
       <tbody>
       </tbody>
       <tfoot>
-        <tr id='row-tot-conto' style='background-color: #ffe0cc;'>
+        <tr id='row-tot-conto' style='background-color: #ffe0cc; font-weight: bold;'>
             <td $class>
               <span>TOTALE:</span>
               <br>

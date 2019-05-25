@@ -17,7 +17,7 @@ html, body {
 	}
 	/*  Define the background color for all the EVEN background rows  */
 .table tr:nth-child(even){
-		background-color: #e9f1fb;
+		background-color: white;/*#e9f1fb;*/
 	}
 
 a{
