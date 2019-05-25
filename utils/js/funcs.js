@@ -5,17 +5,6 @@ $(document).ready(function(){
         $(this).select();
     });
 
-    $('#order-name').blur(function(){
-        var name = $('#order-name').val().trim();
-        var table = $('#table-num').text();
-
-        if(name === ''){
-            $('#alert').show();
-        } else{
-            $('#avanti-link').attr('href', '/ordinazioni/ordina.php?n='+name+'&t='+table);
-        }
-    });
-
     $('#btn-send').click(function(){
       var order_data = {};
       order_data = JSON.parse(localStorage.getItem('order-data'));
@@ -185,4 +174,20 @@ function updateOrder(idprod,qta){
     delete order[idprod];
   }
   localStorage.setItem('order-prods', JSON.stringify(order));
+}
+
+function initButton(){
+  var name = $('#order-name').val().trim();
+  var table = $('#order-table').val().trim();
+
+  if(name === ''){
+      $('#alert').show();
+      $('#alert').text('Inserisci un nome valido!');
+  }else if(table===''){
+      $('#alert').show();
+      $('#alert').text('Inserisci un tavolo valido!');
+  }else{
+      $('#alert').hide();
+      window.location.href = '/ordinazioni/ordina.php?n='+name+'&t='+table;
+  }
 }
