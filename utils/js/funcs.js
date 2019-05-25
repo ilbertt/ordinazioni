@@ -20,7 +20,6 @@ $(document).ready(function(){
               $('#completed').html(res);
               $('.indice').hide();
               $('.tabs').hide();
-              //$('.conto').hide();
 
           }).fail(function() {
 
@@ -34,7 +33,6 @@ $(document).ready(function(){
     $('.qta-button').click(function(){
       var prezzo = parseFloat($(this).attr('data-prezzo'));
       var idprod = parseInt($(this).attr('data-idprod'),10);
-      //var tot = parseFloat($(this).attr('data-tot'));
       var op = $(this).attr('data-op');
 
       var input = $('.input-qta-'+idprod); //casella con quantità (vale sia per il conto che per i prodotti perchè uso la classe come selector)

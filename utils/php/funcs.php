@@ -55,23 +55,14 @@ function tableContent($tipo_id, $tipo){
   $stmt = $mysqli->query("SELECT * FROM `Prodotti` WHERE `Tipo` = '$tipo_id' AND `fuori-listino` IS FALSE ORDER BY `Nome` ASC");
 
   if ($stmt->num_rows > 0){
-      $x = 0;
       echo tableHead($tipo_id, $tipo);
 
       while ($row = $stmt->fetch_assoc()){
           $id = $row['ID'];
           $idprod = $row['IDProd'];
-          //$Tipo = $row['Tipo'];
           $nome = $row['Nome'];
           $descr = $row['Descr'];
           $prezzo = $row['Prezzo'];
-
-          if($x % 2 == 0) {
-              //$class = "class='tdp'";
-              $class = '';
-          } else{
-              $class = '';
-          }
 
           echo "<tr id='row-$idprod'>
                   <td $class>
@@ -93,8 +84,6 @@ function tableContent($tipo_id, $tipo){
                     <button class='qta-button plus' data-op='+' data-idprod='$idprod' data-prezzo='$prezzo'>+</button>
                   </td>
                 </tr>";
-
-          $x++;
       }
       echo tableClose();
   }
@@ -110,29 +99,5 @@ function tableClose(){
               <button style='background-color: blue;'><a href='javascript:void(0);' id='btn-conto' style='color:white;' onclick='showConto();'>Vai al conto</a></button>
             </span>
           </div>";
-}
-
-function cleanString($text) {
-    $utf8 = array(
-        '/[áàâãªä]/u'   =>   'a',
-        '/[ÁÀÂÃÄ]/u'    =>   'A',
-        '/[ÍÌÎÏ]/u'     =>   'I',
-        '/[íìîï]/u'     =>   'i',
-        '/[éèêë]/u'     =>   'e',
-        '/[ÉÈÊË]/u'     =>   'E',
-        '/[óòôõºö]/u'   =>   'o',
-        '/[ÓÒÔÕÖ]/u'    =>   'O',
-        '/[úùûü]/u'     =>   'u',
-        '/[ÚÙÛÜ]/u'     =>   'U',
-        '/ç/'           =>   'c',
-        '/Ç/'           =>   'C',
-        '/ñ/'           =>   'n',
-        '/Ñ/'           =>   'N',
-        '/–/'           =>   '-', // UTF-8 hyphen to "normal" hyphen
-        '/[’‘‹›‚]/u'    =>   ' ', // Literally a single quote
-        '/[“”«»„]/u'    =>   ' ', // Double quote
-        '/ /'           =>   ' ', // nonbreaking space (equiv. to 0x160)
-    );
-    return preg_replace(array_keys($utf8), array_values($utf8), $text);
 }
 ?>
