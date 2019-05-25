@@ -87,7 +87,7 @@ function tableContent($tipo_id, $tipo){
                     </span>
                   </td>
                   <td $class style='text-align: center;'>
-                    <input type='number' class='qta' value='0' id='input-qta-$idprod' data-prezzo='$prezzo' data-idprod='$idprod'  data-tot='0.0' disabled/>
+                    <input type='number' class='qta input-qta-$idprod' value='0' id='input-qta-$idprod' data-prezzo='$prezzo' data-idprod='$idprod'  data-tot='0.0' disabled/>
                     <br>
                     <button class='qta-button minus' data-op='-' data-idprod='$idprod' data-prezzo='$prezzo'>-</button>
                     <button class='qta-button plus' data-op='+' data-idprod='$idprod' data-prezzo='$prezzo'>+</button>

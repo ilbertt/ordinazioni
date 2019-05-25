@@ -48,60 +48,58 @@ $(document).ready(function(){
       //var tot = parseFloat($(this).attr('data-tot'));
       var op = $(this).attr('data-op');
 
-      var input = $('#input-qta-'+idprod);
-      var qta = parseInt(input.val(),10);
-      qta = handleVal(qta,op);
+      var input = $('.input-qta-'+idprod); //casella con quantità (vale sia per il conto che per i prodotti perchè uso la classe come selector)
 
-      var newTot = handlePrice(qta,prezzo).toFixed(2);
-      input.attr('data-tot', newTot);
-      $('.tot-'+idprod).text(newTot);
+      var qta = parseInt(input.val(),10); //quantità del prodotto prima di premere il pulsante
+      qta = handleVal(qta,op); //aggiorna la quantità
 
-      var totConto = parseFloat($('#tot-conto').text());
-      totConto = handleConto(totConto,prezzo,op).toFixed(2);
-      $('#tot-conto').text(totConto);
+      var subTot = handlePrice(qta,prezzo); //subtotale del prodotto
 
-      var row = $(this).closest('tr');
-      var idrow = row.attr('id');
+      var totConto = parseFloat($('#tot-conto').text()); //totale del conto
+      totConto = handleConto(totConto,prezzo,op); //aggiorna tot conto
 
-      if(row.hasClass('row-conto')){ //se sto toccando un input nel conto
-        var input_conto = $('#tb-conto #'+idrow+' #conto-qta-'+idprod);
+      var row = $(this).closest('tr'); //trova la riga nella tabella del pulsante cliccato
+      var idrow = row.attr('id'); //trova l'id della riga
 
+      if(row.hasClass('row-conto')){ //**** SE STO TOCCANDO UN INPUT NEL CONTO ****
 
         if(qta>0){
-          input.val(qta);
-          input.attr('data-tot', newTot);
-          input_conto.val(qta);
-          input_conto.attr('data-tot', newTot);
+          updateQta(input,qta); //aggiorna la grafica della quantità
+          updateSubTot(input, subTot, idprod); //aggiorna la grafica del subtotale del prodotto
+          updateOrderTot(totConto); //aggiorna la grafica del totale
+
         }else{
           if(confirm("Rimuovere dal conto?")){
-            input.val(qta);
-            input.attr('data-tot', newTot);
-            row.remove();
+            //quindi la qta=0 perchè è già stata aggiornata
+            updateQta(input,qta); //aggiorna la grafica della quantità
+            updateSubTot(input, subTot, idprod); //aggiorna la grafica del subtotale del prodotto
+            updateOrderTot(totConto); //aggiorna la grafica del totale
+
+            row.remove(); //togli la riga dalla tabella del conto
           }else{
+            //non fare nulla, riaggiorna solo la qta a 1 perchè era stata decrementata a 0
             qta = 1;
           }
         }
 
-      }else{ //se sto toccando un input dei prodotti
-        var row_conto = $('#tb-conto #'+idrow);
-        input.val(qta);
-        input.attr('data-tot', newTot);
+      }else{ //**** SE STO TOCCANDO UN INPUT DEI PRODOTTI ****
+        var row_conto = $('#tb-conto #'+idrow); //prendi la riga con id = idrow nella tabella del conto
+
+        updateQta(input,qta); //aggiorna la grafica della quantità
+        updateSubTot(input, subTot, idprod); //aggiorna la grafica del subtotale del prodotto
+        updateOrderTot(totConto); //aggiorna la grafica del totale
 
         if(row_conto.length){ //se la riga esiste già nel conto
-          var input_conto = $('#tb-conto #'+idrow+' #conto-qta-'+idprod);
-          input_conto.val(qta);
-          input_conto.attr('data-tot', newTot);
           if(qta===0){
-            row_conto.remove();
+            row_conto.remove(); //togli la riga dalla tabella del conto
           }
         } else{
           if(qta>0){
-            var copyTable = $('#tb-conto tbody');
-            var cloneRow = row.clone(true,true);
+            var copyTable = $('#tb-conto tbody'); //tabella in cui copiare la riga
+            var cloneRow = row.clone(true,true); //clona la riga copiando anche tutti gli eventi
             //console.log(idrow);
-            copyTable.append(cloneRow);
-            $('#tb-conto #'+idrow).addClass('row-conto');
-            $('#tb-conto #'+idrow+' #input-qta-'+idprod).attr('id', 'conto-qta-'+idprod);
+            copyTable.append(cloneRow); //attacca la riga alla tabella
+            $('#tb-conto #'+idrow).addClass('row-conto'); //aggiungi la classe per renderla distinguibile dalla riga nei prodotti
           }
         }
       }
@@ -135,19 +133,32 @@ function handleVal(qta,operator){
 
 function handlePrice(qta,prezzo){
   //console.log(prezzo*qta);
-  return prezzo*qta;
+  return (prezzo*qta).toFixed(2);
 }
 
 function handleConto(tot,price,operator){
   if(operator === '+'){
-    return tot + price;
+    return (tot + price).toFixed(2);
   }else if(operator === '-'){
     if(tot>0.0){ //evita che si vada sotto lo 0
-      return tot-price;
+      return (tot-price).toFixed(2);
     }else{
-      return tot;
+      return (tot).toFixed(2);
     }
   }
+}
+
+function updateQta(input,qta){
+  input.val(qta); //aggiorna la grafica della quantità
+}
+
+function updateSubTot(input,subTot,idprod){
+  input.attr('data-tot', subTot); //imposta il subtotale del prodotto
+  $('.tot-'+idprod).text(subTot); //aggiorna la grafica del subtotale del prodotto
+}
+
+function updateOrderTot(totOrder){
+  $('#tot-conto').text(totOrder); //aggiorna la grafica del conto
 }
 
 function setOrder(){
