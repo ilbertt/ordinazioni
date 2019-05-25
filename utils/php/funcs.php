@@ -74,7 +74,7 @@ function tableContent($tipo_id, $tipo){
                     &#8364; <span id='prezzo-$idprod'>$prezzo</span>
                     <br>
                     <span class='descr'>
-                      &#8364; <span class='tot-$idprod'>0.00</span>
+                      Sbt: &#8364; <span class='tot-$idprod'>0.00</span>
                     </span>
                   </td>
                   <td $class style='text-align: center;'>
