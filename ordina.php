@@ -1,11 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 require_once 'header.php';
 
 if(isset($_GET)){
@@ -15,75 +8,71 @@ if(isset($_GET)){
 
 global $mysqli;
 
-$sql2 = "INSERT INTO `id-ordini` (`vero`) VALUES ('1')";
+$sql2 = "INSERT INTO `id-ordini` (`nome`,`table`) VALUES ('$order_name','$table_num')";
 if ($mysqli->query($sql2)) {
     $newid = $mysqli->insert_id;
 } else {
     $newid = 1;
     echo "Errore: " . $sql2 . "<br>" . $mysqli->error;
 }
-
-/*$txt = "SELECT MAX(id) FROM `id-ordini`";
-$stmt = $mysqli->query($txt);
-
-if ($stmt->num_rows > 0){
-    while ($row = $stmt->fetch_assoc()){
-        $id = $row['max'];
-        echo $id;
-        $true = $row['true'];
-    }
-    $newid = ++$id;
-} else{
-    echo "$stmt<br>$mysqli->error";
-    $newid=1;
-}*/
-
-
-
 ?>
 <!--<span style="font-size: 3em; color: red;"id="indicazione-gluten">Gli ordini sono chiusi! Si prega il cliente di recarsi in cassa per effettuare un ordine</span><br><br>-->
 
-<div class='indice'>
-    <span style='font-size: 1.5em;' id='indice'>Indice</span>
-    <ul style='margin-top: 0px;'>
-        <li><a href='#appetizer'>Appetizer</a></li>
-        <li><a href='#hamburger'>Hamburger</a></li>
-        <!--<li><a href='#panini'>Panini</a></li>-->
-        <li><a href='#sandwich'>Club Sandwich</a></li>
-        <li><a href='#bevande'>Bevande</a></li>
-        <li><a href='#dolci'>Dolci</a></li>
-        <li style='margin-top: 10px;'><a href='#conto'>Vai al conto</a></li>
-    </ul>
-</div>
+
 <div class='order-name'>
     <!--<span style="font-size: 3em; color: red;"id="indicazione-gluten">Le piadine indicate con * sono disponibili anche senza glutine!</span><br><br>-->
-    <span id='id-ordine' style="display: none;"><?php echo $newid;?></span>
-    <span class='ordine'>Ordine di: <span id='nome-ordine' style='font-weight: bold;'><?php echo "$order_name"?></span></span>
-    <span class='tavolo'>Numero tavolo: <span id='numero-tavolo' style='font-weight: bold;'><?php echo "$table_num"?></span></span>
+    <p id='id-ordine'>ID Ordine: <span id='span-idord' style='font-weight: bold'><?php echo $newid;?></span></p>
+    <p>Ordine di: <span id='nome-ordine' style='font-weight: bold;'><?php echo "$order_name"?></span></p>
+    <p>Numero tavolo: <span id='numero-tavolo' style='font-weight: bold;'><?php echo "$table_num"?></span></p>
 </div>
 <br>
-<div class='completed' id='completed' style='display: none;'>Completato!<br> Vai in cassa a ritirare gli scontrini :)<br><a href='ordina.php?n=<?php echo $order_name?>&t=<?php echo $table_num?>' id='neworder'>Nuovo ordine</a></div>
-<div class='completed' id='error' style='display: none;'>C'&#232; stato un errore... Ci scusiamo per il disagio<br><a href='ordina.php?n=<?php echo $order_name?>&t=<?php echo $table_num?>' id='neworder'>Rifai ordine</a></div>
+<div class='completed' id='completed' style='display: none;'>
+  Completato!<br> Vai in cassa a ritirare gli scontrini :)
+  <br>
+  <a href='ordina.php?n=<?php echo $order_name?>&t=<?php echo $table_num?>' id='neworder'>Nuovo ordine</a>
+</div>
+<div class='indice'>
+       <span style='font-size: 100%;' id='indice'>Indice</span>
+       <?php echo printIndex(); ?>
+</div>
 <div class='tabs'>
-    <?php echo printAppetizerPiatti(); ?>
-    <?php echo printHamburgerPiatti(); ?>
-    <?php //echo printPaniniPiatti(); ?>
-    <?php echo printSandwichPiatti(); ?>
-    <?php echo printBevandePiatti(); ?>
-    <?php echo printDolciPiatti(); ?>
+  <div id='prodotti'>
+    <?php echo printTables(); ?>
+  </div>
+  <div id='conto' style='display: none;'>
+    <div class='under-table'>
+      <span>
+        <button style='background-color: red;'><a href='#indice' style='color:white' onclick='hideConto();'>Torna all'indice</a></button>
+      </span>
+    </div>
+    <table class='table' id='tb-conto'>
+      <thead>
+        <tr style='background-color: #e9f1fb;'>
+          <th style='width:75%' id='indice-conto'><a href='#indice-conto'>CONTO</a></th>
+          <th style='width:20%; text-align:center'>Prezzo</th>
+          <th style='width:5%; text-align:center'>Quantit&#224;</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      <tfoot>
+        <tr id='row-tot-conto' style='background-color: #ffe0cc; font-weight: bold;'>
+            <td $class>
+              <span>TOTALE:</span>
+              <br>
+              <span class='descr'></span>
+            </td>
+            <td $class style='text-align: center;'>
+              &#8364; <span id='tot-conto'>0.00</span>
+            </td>
+          </tr>
+      </tfoot>
+    </table>
+
+    <p style='text-align: center; margin-top: 40px;'><button class='button' id='btn-send'>INVIA</button></p>
+  </div>
 </div>
-<div class='conto'>
-<div class='conto-content'>
-    <span style='font-size: 1.5em; color:#ff9933; font-weight: bold; text-decoration: underline;' id='conto'>Conto</span>    <span><a href='#indice' style="font-size:1.2em; color: #ff3333; float: right;">Torna all'indice</a></span><br>
-    <span id='ordine'></span><br>
-    <span id='totale' style='float: right; font-weight: bold;'></span><br>
-    <!--<span style="width: 100%">
-    <label for='input-note'>Eventuali note:</label>
-    <textarea class='input-note' id='input-note' rows="3" style="width: 100%;"></textarea>
-    </span><br>-->
-    <button class='button' id='btn-send'>INVIA</button>
-</div>
-</div>
+
 
 <?php
 require_once 'closer.php';

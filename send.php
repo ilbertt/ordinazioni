@@ -1,62 +1,44 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-require_once 'config.php'; //TODO: CHANGE TO require_once 'config-public.php'; and USE YOUR CREDENTIALS;
-
-$id = $_POST['id'];
-$name = $_POST['name'];
-$num = $_POST['num'];
-$tot = $_POST['tot'];
-$text = $_POST['text'];
-$nota = $_POST['note'];
-
+require_once 'config/config.php';
 global $mysqli;
 
-$text = str_replace('€', '', $text);
-$text = cleanString($text);
-$menuarr = ['appetizer', 'hamburger', 'sandwich', 'bevande', 'dolci'];
-$arr = explode(',', $text);
-$arr_nota = explode('[',$nota);
+if(isset($_POST)){
 
-$i = 0;
+  $order_data = $_POST['order-data'];
+  $order_prods = $_POST['order-prods'];
 
-foreach ($arr as $line) {
-    $arrline = explode('X', $line);
-    $testo = rtrim($arrline[0]);
-    $nota_db = $arr_nota[$i];
+  $name = $order_data['name'];
+  $table = $order_data['table'];
+  $idord = $order_data['idord'];
 
-    if(!$nota_db || $nota_db === ''){
-        $nota_db = '-';
-    }
 
-    for ($mnum = 0; $mnum < count($menuarr); $mnum++){
-        $sqlprod = "SELECT * FROM `menu-$menuarr[$mnum]` WHERE `nome` = '$testo'";
-        $stmt = $mysqli->query($sqlprod);
-        if($stmt->num_rows > 0){
-            while($row = $stmt->fetch_assoc()){
-                $idprod = $row['idprod'];
-            }
-            break;
-        }
-    }
-    $afterx = substr($line, strpos($line, "X") + 1);
-    $arrqta = explode(' ', $afterx);
-
-    for($x=0; $x < count($arrqta); $x++){
-        $qta = $arrqta[0];
-        $prezzo = $arrqta[1];
-    }
-
-    $sql = "INSERT INTO `ordini` (`idord`, `name`, `table`, `idprod`, `qta`, `rimozioni`, `prezzo`) VALUES ('$id', '$name', '$num', '$idprod', '$qta', '$nota_db', '$prezzo')";
+  foreach($order_prods as $idprod => $qta)
+  {
+    $sql = "INSERT INTO `ordini` (`idord`, `name`, `table`, `idprod`, `qta`) VALUES ('$idord', '$name', '$table', '$idprod', '$qta')";
     if($mysqli->query($sql)){
-        echo "";
+      $res = true;
     } else{
-        echo "$sql<br>$mysqli->error";
-    }
 
-    $i++;
+      $res = false;
+      break;
+    }
+  }
+
+  if($res){
+    echo "Completato!
+          <br>
+          Vai in cassa a ritirare gli scontrini :)
+          <br>
+          <a href='ordina.php?n=$name&t=$table' id='neworder'>Nuovo ordine</a>";
+  }else{
+    echo "$sql<br>$mysqli->error";
+    echo "C'&#232; stato un errore... Ci scusiamo per il disagio
+          <br>
+          <a href='ordina.php?n=$name&t=$table' id='neworder'>Rifai ordine</a>";
+  }
+} else{
+  echo "Nothing.";
 }
+
+?>
